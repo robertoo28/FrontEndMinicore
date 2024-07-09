@@ -1,0 +1,61 @@
+<div>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput [matDatepicker]="startPicker" placeholder="Fecha Inicio" formControlName="startDate">
+      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <mat-datepicker #startPicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput [matDatepicker]="endPicker" placeholder="Fecha Fin" formControlName="endDate">
+      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <mat-datepicker #endPicker></mat-datepicker>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Buscar</button>
+  </form>
+
+  <h3>Total de tareas que se pasaron: {{ totalTareasPasadas }}</h3>
+
+  <table mat-table [dataSource]="tareas" class="mat-elevation-z8">
+
+    <!-- Empleado Column -->
+    <ng-container matColumnDef="empleado">
+      <th mat-header-cell *matHeaderCellDef> Empleado </th>
+      <td mat-cell *matCellDef="let tarea"> {{tarea.empleado.nombre}} {{tarea.empleado.apellido}} </td>
+    </ng-container>
+
+    <!-- Tarea Column -->
+    <ng-container matColumnDef="tarea">
+      <th mat-header-cell *matHeaderCellDef> Tarea </th>
+      <td mat-cell *matCellDef="let tarea"> {{tarea.descripcion}} </td>
+    </ng-container>
+
+    <!-- Fecha Inicio Column -->
+    <ng-container matColumnDef="fechaInicio">
+      <th mat-header-cell *matHeaderCellDef> Fecha Inicio </th>
+      <td mat-cell *matCellDef="let tarea"> {{tarea.fechaEmpezar | date}} </td>
+    </ng-container>
+
+    <!-- Fecha Fin Column -->
+    <ng-container matColumnDef="fechaFin">
+      <th mat-header-cell *matHeaderCellDef> Fecha Fin </th>
+      <td mat-cell *matCellDef="let tarea"> {{tarea.fechaFin | date}} </td>
+    </ng-container>
+
+    <!-- Días Pasado Column -->
+    <ng-container matColumnDef="diasPasado">
+      <th mat-header-cell *matHeaderCellDef> Días Pasado </th>
+      <td mat-cell *matCellDef="let tarea"> {{tarea.diasPasado}} días </td>
+    </ng-container>
+
+    <!-- Proyecto Column -->
+    <ng-container matColumnDef="proyecto">
+      <th mat-header-cell *matHeaderCellDef> Proyecto </th>
+      <td mat-cell *matCellDef="let tarea"> {{tarea.proyecto.nombreProyecto}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
